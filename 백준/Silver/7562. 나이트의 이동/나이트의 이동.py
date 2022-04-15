@@ -9,15 +9,20 @@ for _ in range(T):
     I=int(input())
     u,v=map(int,input().split())
     fu,fv=map(int,input().split())
-    visited=[[0]*I for _ in range(I)]
-    q=deque([[u,v]])
-    while q:
-        y,x=q.popleft()
-        if y==fu and x==fv:
-            print(visited[y][x])
-            break
-        for i in range(8):
-            a,b=y+dy[i],x+dx[i]
-            if 0<=a<I and 0<=b<I and visited[a][b]==0:
-                q.append([a,b])
-                visited[a][b]=visited[y][x]+1
+    if u==fu and v==fv:
+        print(0)
+    else:
+        visited=[[0]*I for _ in range(I)]
+        q=deque([[u,v]])
+        while q:
+            y,x=q.popleft()
+            for i in range(8):
+                a,b=y+dy[i],x+dx[i]
+                if 0<=a<I and 0<=b<I:
+                    if visited[a][b]==0:
+                        if a==fu and b==fv:
+                            q=deque([])
+                            print(visited[y][x]+1)
+                            break
+                        q.append([a,b])
+                        visited[a][b]=visited[y][x]+1
