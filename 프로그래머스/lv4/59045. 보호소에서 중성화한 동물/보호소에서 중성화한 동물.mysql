@@ -1,0 +1,6 @@
+-- 코드를 입력하세요
+SELECT ANIMAL_ID, ANIMAL_TYPE,NAME
+from (select ANIMAL_ID, SEX_UPON_INTAKE from ANIMAL_INS) as s 
+natural join ANIMAL_OUTS
+where SEX_UPON_INTAKE!=SEX_UPON_OUTCOME
+order by ANIMAL_ID;
