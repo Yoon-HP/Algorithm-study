@@ -1,0 +1,21 @@
+import math
+def solution(n, stations, w):
+    N=n
+    st=stations
+    W=w
+    answer=0
+    start=1
+    for i in st:
+        if i-W-start<=0:
+            start=i+W+1
+            if start>N:
+                return answer
+        else:
+            answer+=math.ceil((i-W-start)/(2*W+1))
+            start=i+W+1
+            if start>N:
+                return answer
+            
+    answer+=math.ceil((N-start+1)/(2*W+1))
+    print(answer)
+    return answer
