@@ -36,11 +36,13 @@ h=[]
 for i in range(1,N+1):
     for j in range(1,N+1):
         if i!=j:
-            heapq.heappush(h,[dist(position[i],position[j]),i,j])
+            h.append([dist(position[i],position[j]),i,j])
+                
+h.sort(reverse=True)
 while h:
     if cnt==N:
         break
-    w,a,b=heapq.heappop(h)
+    w,a,b=h.pop()
     if find(a)!=find(b):
         if not visit[u]:
             visit[u]=True
