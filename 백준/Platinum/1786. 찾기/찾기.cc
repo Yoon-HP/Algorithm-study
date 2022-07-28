@@ -11,6 +11,9 @@ void computeLPS(string pat);
 void KMPSearch(string pat, string txt);
 
 int main(){
+    ios_base :: sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
     string pat, txt;
     getline(cin, txt);
     getline(cin, pat);
