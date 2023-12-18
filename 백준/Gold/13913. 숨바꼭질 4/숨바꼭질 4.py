@@ -8,7 +8,7 @@ N, K=map(int,input().split())
 # 처음위치, 초, Path
 queue=deque([[N,0,f"{N}"]])
 
-visit=[False]*200001
+visit=[False]*100001
 
 
 while queue:
@@ -27,7 +27,7 @@ while queue:
         elif i==2:
             n_pos=pos*2
     
-        if n_pos<0 or n_pos>200000:
+        if n_pos<0 or n_pos>100000:
             continue
         if visit[n_pos]:
             continue
