@@ -2,35 +2,45 @@
 
 from collections import deque
 
-N, K=map(int,input().split())
+N, K = map(int, input().split())
 
 
-# 처음위치, 초, Path
-queue=deque([[N,0,f"{N}"]])
+# 처음위치, 초,
+queue = deque([[N, 0]])
 
-visit=[False]*100001
+visit = [-1] * 100001
 
-
+visit[N] = 0
+ans_sec = 0
 while queue:
-    pos,sec,path=queue.popleft()
-    
-    if pos==K:
-        print(len(path.split())-1)
-        print(path)
+    pos, sec = queue.popleft()
+
+    if pos == K:
+        ans_sec = sec
         break
 
-    for i in range(3):
-        if i==0:
-            n_pos=pos-1
-        elif i==1:
-            n_pos=pos+1
-        elif i==2:
-            n_pos=pos*2
-    
-        if n_pos<0 or n_pos>100000:
+    for n_pos in (pos-1,pos+1,pos*2):
+        if n_pos < 0 or n_pos > 100000:
             continue
-        if visit[n_pos]:
+        if visit[n_pos] != -1:
             continue
-        
-        queue.append([n_pos,sec+1,path+f" {n_pos}"])
-        visit[n_pos]=True
+        queue.append([n_pos, sec + 1])
+        visit[n_pos] = sec + 1
+
+
+temp = ans_sec - 1
+PathTrack = [K]
+
+# 어떤 시간대에 방문했는지도 고려해야함
+while temp > -1:
+    for nk in (K - 1, K + 1, K // 2):
+        if nk < 0 or nk > 100000:
+            continue
+        if visit[nk] == temp:
+            PathTrack.append(nk)
+            K = nk
+            temp -= 1
+            break
+
+print(ans_sec)
+print(*PathTrack[::-1])
