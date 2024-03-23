@@ -1,35 +1,42 @@
+# 다익스트라 복습 
+
+# 1753번 최단경로
+
 import heapq
 import sys
 input=sys.stdin.readline
 
 V,E=map(int,input().split())
-start=int(input())
-graph=[[] for i in range(V+1)]
+K=int(input())
 
+graph=[[] for _ in range(V+1)]
+dist=[float('inf') for _ in range(V+1)]
 
-for i in range(E):
+for _ in range(E):
     u,v,w=map(int,input().split())
+    
+    # 방향 그래프!
     graph[u].append([v,w])
 
+# init
+dist[K]=0
 
-min_Q=[]
-stpath=[float('inf')]*(V+1)
-def dijkstra(start):
-    stpath[start]=0
-    heapq.heappush(min_Q,[0,start])
-    while min_Q:
-        d,u=heapq.heappop(min_Q)
-        for v,w in graph[u]:
-            temp_w=w+d
-            if temp_w<stpath[v]:
-                stpath[v]=temp_w
-                heapq.heappush(min_Q,[temp_w,v])
+# 우선순위 큐 안에 가중치 값이 앞에 위치 해야함
+min_Q=[[0,K]]
 
-
-dijkstra(start)
-
+while min_Q:
+    d,u=heapq.heappop(min_Q)
+    
+    if d > dist[u]:
+        continue
+    
+    for adj,w in graph[u]:
+        if d+w < dist[adj]:
+            dist[adj]=d+w
+            heapq.heappush(min_Q,[d+w,adj])
+            
 for i in range(1,V+1):
-    if stpath[i]==float('inf'):
+    if dist[i]==float('inf'):
         print("INF")
     else:
-        print(stpath[i])
+        print(dist[i])
